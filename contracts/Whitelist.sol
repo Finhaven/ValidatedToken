@@ -15,16 +15,11 @@ contract Whitelist is TokenValidator, Owned, EIP820Implementer {
   }
 
   function check(address _token, address _user) public /* view */ returns (uint8 resultCode) {
-    uint8 result = 0;
-
     for(uint i = 0; i < whitelist.length; i++) {
-      if (_user == whitelist[i]) {
-        result = 1;
-        break;
-      }
+      if (_user == whitelist[i]) { return 1; }
     }
 
-    return result;
+    return 0;
   }
 
   function check(
@@ -35,18 +30,14 @@ contract Whitelist is TokenValidator, Owned, EIP820Implementer {
   ) public /* view */ returns (uint8 resultCode) {
     bool  fromOk = false;
     bool  toOk   = false;
-    uint8 result = 0;
 
     for(uint i = 0; i < whitelist.length; i++) {
       if (_from == whitelist[i]) { fromOk = true; }
       if (_to   == whitelist[i]) { toOk   = true; }
 
-      if (toOk && fromOk) {
-        result = 1;
-        break;
-      }
+      if (toOk && fromOk) { return 1; }
     }
 
-    return result;
+    return 0;
   }
 }
