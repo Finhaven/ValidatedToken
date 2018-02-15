@@ -81,10 +81,10 @@ contract DiffToken is ReferenceToken {
         address _from,
         address _to,
         uint256 _amount,
-        bytes _userData,
+        bytes   _userData,
         address _operator,
-        bytes _operatorData,
-        bool _preventLocking
+        bytes   _operatorData,
+        bool    _preventLocking
     ) private {
         requireOk(validate(_from, _to, _amount));
         requireMultiple(_amount);
@@ -106,15 +106,15 @@ contract DiffToken is ReferenceToken {
         address _from,
         address _to,
         uint256 _amount,
-        bytes _userData,
-        bytes _operatorData,
-        bool _preventLocking
+        bytes   _userData,
+        bytes   _operatorData,
+        bool    _preventLocking
     ) private {
         address recipientImplementation = interfaceAddr(_to, "ITokenRecipient");
 
         if (recipientImplementation != 0) {
-          ITokenRecipient(recipientImplementation)
-            .tokensReceived(_from, _to, _amount, _userData, _operator, _operatorData);
+            ITokenRecipient(recipientImplementation)
+              .tokensReceived(_from, _to, _amount, _userData, _operator, _operatorData);
         } else if (_preventLocking) {
             require(isRegularAddress(_to));
         }

@@ -10,34 +10,34 @@ contract Whitelist is TokenValidator, Owned, EIP820Implementer {
   address[] private whitelist;
 
   function Whitelist(address[] _whitelist) public {
-    whitelist = _whitelist;
-    setInterfaceImplementation("TokenValidator", this);
+      whitelist = _whitelist;
+      setInterfaceImplementation("TokenValidator", this);
   }
 
   function check(address _token, address _user) public /* view */ returns (uint8 resultCode) {
-    for(uint i = 0; i < whitelist.length; i++) {
-      if (_user == whitelist[i]) { return 1; }
-    }
+      for(uint i = 0; i < whitelist.length; i++) {
+        if (_user == whitelist[i]) { return 1; }
+      }
 
-    return 0;
+      return 0;
   }
 
   function check(
-    address _token,
-    address _from,
-    address _to,
-    uint256 _amount
+      address _token,
+      address _from,
+      address _to,
+      uint256 _amount
   ) public /* view */ returns (uint8 resultCode) {
-    bool  fromOk = false;
-    bool  toOk   = false;
+      bool  fromOk = false;
+      bool  toOk   = false;
 
-    for(uint i = 0; i < whitelist.length; i++) {
-      if (_from == whitelist[i]) { fromOk = true; }
-      if (_to   == whitelist[i]) { toOk   = true; }
+      for(uint i = 0; i < whitelist.length; i++) {
+          if (_from == whitelist[i]) { fromOk = true; }
+          if (_to   == whitelist[i]) { toOk   = true; }
 
-      if (toOk && fromOk) { return 1; }
-    }
+          if (toOk && fromOk) { return 1; }
+      }
 
-    return 0;
+      return 0;
   }
 }
