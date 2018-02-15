@@ -1,0 +1,311 @@
+{
+  "contractName": "ValidatedToken",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "result",
+          "type": "uint8"
+        },
+        {
+          "indexed": true,
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "Validation",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "result",
+          "type": "uint8"
+        },
+        {
+          "indexed": true,
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Validation",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a7230582058399401286188acfe536ba1c6c4a79962cda637542c2b58e2cd6eaa2e02ecac0029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a7230582058399401286188acfe536ba1c6c4a79962cda637542c2b58e2cd6eaa2e02ecac0029",
+  "sourceMap": "26:236:2:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "26:236:2:-;;;;;",
+  "source": "pragma solidity ^0.4.19;\n\ninterface ValidatedToken {\n  event Validation(\n    uint8   indexed result,\n    address indexed user\n  );\n\n  event Validation(\n    uint8   indexed result,\n    address indexed from,\n    address indexed to,\n    uint256         value\n  );\n}\n",
+  "sourcePath": "/Users/expede/Documents/Work/Finhaven/ValidatedToken/contracts/ValidatedToken.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/Users/expede/Documents/Work/Finhaven/ValidatedToken/contracts/ValidatedToken.sol",
+      "exportedSymbols": {
+        "ValidatedToken": [
+          935
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".19"
+          ]
+        },
+        "id": 918,
+        "name": "PragmaDirective",
+        "src": "0:24:2"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            935
+          ],
+          "name": "ValidatedToken",
+          "scope": 936
+        },
+        "children": [
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "Validation"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "result",
+                      "scope": 924,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint8",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint8",
+                          "type": "uint8"
+                        },
+                        "id": 919,
+                        "name": "ElementaryTypeName",
+                        "src": "77:5:2"
+                      }
+                    ],
+                    "id": 920,
+                    "name": "VariableDeclaration",
+                    "src": "77:22:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "user",
+                      "scope": 924,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 921,
+                        "name": "ElementaryTypeName",
+                        "src": "105:7:2"
+                      }
+                    ],
+                    "id": 922,
+                    "name": "VariableDeclaration",
+                    "src": "105:20:2"
+                  }
+                ],
+                "id": 923,
+                "name": "ParameterList",
+                "src": "71:58:2"
+              }
+            ],
+            "id": 924,
+            "name": "EventDefinition",
+            "src": "55:75:2"
+          },
+          {
+            "attributes": {
+              "anonymous": false,
+              "name": "Validation"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "result",
+                      "scope": 934,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint8",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint8",
+                          "type": "uint8"
+                        },
+                        "id": 925,
+                        "name": "ElementaryTypeName",
+                        "src": "156:5:2"
+                      }
+                    ],
+                    "id": 926,
+                    "name": "VariableDeclaration",
+                    "src": "156:22:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "from",
+                      "scope": 934,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 927,
+                        "name": "ElementaryTypeName",
+                        "src": "184:7:2"
+                      }
+                    ],
+                    "id": 928,
+                    "name": "VariableDeclaration",
+                    "src": "184:20:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": true,
+                      "name": "to",
+                      "scope": 934,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 929,
+                        "name": "ElementaryTypeName",
+                        "src": "210:7:2"
+                      }
+                    ],
+                    "id": 930,
+                    "name": "VariableDeclaration",
+                    "src": "210:18:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "indexed": false,
+                      "name": "value",
+                      "scope": 934,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 931,
+                        "name": "ElementaryTypeName",
+                        "src": "234:7:2"
+                      }
+                    ],
+                    "id": 932,
+                    "name": "VariableDeclaration",
+                    "src": "234:21:2"
+                  }
+                ],
+                "id": 933,
+                "name": "ParameterList",
+                "src": "150:109:2"
+              }
+            ],
+            "id": 934,
+            "name": "EventDefinition",
+            "src": "134:126:2"
+          }
+        ],
+        "id": 935,
+        "name": "ContractDefinition",
+        "src": "26:236:2"
+      }
+    ],
+    "id": 936,
+    "name": "SourceUnit",
+    "src": "0:263:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-15T06:30:47.465Z"
+}

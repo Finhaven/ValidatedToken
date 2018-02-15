@@ -1,0 +1,299 @@
+{
+  "contractName": "ITokenRecipient",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "name": "userData",
+          "type": "bytes"
+        },
+        {
+          "name": "operator",
+          "type": "address"
+        },
+        {
+          "name": "operatorData",
+          "type": "bytes"
+        }
+      ],
+      "name": "tokensReceived",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file, You can obtain one at http://mozilla.org/MPL/2.0/. */\n\npragma solidity ^0.4.19; // solhint-disable-line compiler-fixed\n\n\ninterface ITokenRecipient {\n    function tokensReceived(\n        address from,\n        address to,\n        uint amount,\n        bytes userData,\n        address operator,\n        bytes operatorData\n    ) public;\n}\n",
+  "sourcePath": "eip777/contracts/ITokenRecipient.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "eip777/contracts/ITokenRecipient.sol",
+      "exportedSymbols": {
+        "ITokenRecipient": [
+          953
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".19"
+          ]
+        },
+        "id": 937,
+        "name": "PragmaDirective",
+        "src": "206:24:3"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            953
+          ],
+          "name": "ITokenRecipient",
+          "scope": 954
+        },
+        "children": [
+          {
+            "attributes": {
+              "body": null,
+              "constant": false,
+              "implemented": false,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "tokensReceived",
+              "payable": false,
+              "scope": 953,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "from",
+                      "scope": 952,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 938,
+                        "name": "ElementaryTypeName",
+                        "src": "337:7:3"
+                      }
+                    ],
+                    "id": 939,
+                    "name": "VariableDeclaration",
+                    "src": "337:12:3"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "to",
+                      "scope": 952,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 940,
+                        "name": "ElementaryTypeName",
+                        "src": "359:7:3"
+                      }
+                    ],
+                    "id": 941,
+                    "name": "VariableDeclaration",
+                    "src": "359:10:3"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "amount",
+                      "scope": 952,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint",
+                          "type": "uint256"
+                        },
+                        "id": 942,
+                        "name": "ElementaryTypeName",
+                        "src": "379:4:3"
+                      }
+                    ],
+                    "id": 943,
+                    "name": "VariableDeclaration",
+                    "src": "379:11:3"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "userData",
+                      "scope": 952,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes",
+                          "type": "bytes storage pointer"
+                        },
+                        "id": 944,
+                        "name": "ElementaryTypeName",
+                        "src": "400:5:3"
+                      }
+                    ],
+                    "id": 945,
+                    "name": "VariableDeclaration",
+                    "src": "400:14:3"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "operator",
+                      "scope": 952,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 946,
+                        "name": "ElementaryTypeName",
+                        "src": "424:7:3"
+                      }
+                    ],
+                    "id": 947,
+                    "name": "VariableDeclaration",
+                    "src": "424:16:3"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "operatorData",
+                      "scope": 952,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bytes memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bytes",
+                          "type": "bytes storage pointer"
+                        },
+                        "id": 948,
+                        "name": "ElementaryTypeName",
+                        "src": "450:5:3"
+                      }
+                    ],
+                    "id": 949,
+                    "name": "VariableDeclaration",
+                    "src": "450:18:3"
+                  }
+                ],
+                "id": 950,
+                "name": "ParameterList",
+                "src": "327:147:3"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 951,
+                "name": "ParameterList",
+                "src": "481:0:3"
+              }
+            ],
+            "id": 952,
+            "name": "FunctionDefinition",
+            "src": "304:178:3"
+          }
+        ],
+        "id": 953,
+        "name": "ContractDefinition",
+        "src": "272:212:3"
+      }
+    ],
+    "id": 954,
+    "name": "SourceUnit",
+    "src": "206:279:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-02-15T06:30:47.465Z"
+}
