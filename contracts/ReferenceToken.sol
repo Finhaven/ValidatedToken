@@ -11,6 +11,8 @@ import "eip777/contracts/Ierc20.sol";
 import "eip777/contracts/Ierc777.sol";
 import "eip777/contracts/ITokenRecipient.sol";
 
+// Adjusted from Ierc777/ReferenceToken.sol
+
 contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
     using SafeMath for uint256;
 
@@ -27,21 +29,14 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
     mapping(address => mapping(address => uint256)) private mAllowed;
 
     // Single validator
-
     TokenValidator private validator;
 
-    // Validation Events
-
-    event Validation(uint8 indexed result, address indexed user);
-
-    event Validation(
-      uint8   indexed result,
-      address indexed from,
-      address indexed to,
-      uint256         value
-    );
-
-    function ReferenceToken(string _name, string _symbol, uint256 _granularity, TokenValidator _validator) public {
+    function ReferenceToken(
+        string         _name,
+        string         _symbol,
+        uint256        _granularity,
+        TokenValidator _validator
+    ) public {
         mName = _name;
         mSymbol = _symbol;
         mTotalSupply = 0;
@@ -54,15 +49,18 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
         setInterfaceImplementation("Ierc20", this);
     }
 
-    // Validator Helpers
+    // Validation Helpers
 
     function validate(address _user) internal returns (uint8 resultCode) {
-      address moi = this;
-      return validator.check(moi, _user);
+        return validator.check(this, _user);
     }
 
-    function validate(address _from, address _to, uint256 _amount) internal returns (uint8 resultCode) {
-      return validator.check(this, _from, _to, _amount);
+    function validate(
+        address _from,
+        address _to,
+        uint256 _amount
+    ) internal returns (uint8 resultCode) {
+        return validator.check(this, _from, _to, _amount);
     }
 
     // Status Code Helpers
@@ -172,7 +170,7 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
     }
 
     function approve(address _spender, uint256 _amount) public erc20 returns (bool success) {
-      if(validate(msg.sender, _spender, _amount) != 1) { return false; }
+        if(validate(msg.sender, _spender, _amount) != 1) { return false; }
 
         mAllowed[msg.sender][_spender] = _amount;
         Approval(msg.sender, _spender, _amount);
@@ -207,7 +205,7 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
         requireMultiple(_amount);
         require(_to != address(0));          // forbid sending to 0x0 (=burning)
         require(mBalances[_from] >= _amount); // ensure enough funds
-        requireOk(validate(_from, _to, _amount));
+        requireOk(validate(_from, _to, _amount)); // Ensure passes validation
 
         mBalances[_from] = mBalances[_from].sub(_amount);
         mBalances[_to] = mBalances[_to].add(_amount);

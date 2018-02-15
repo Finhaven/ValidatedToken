@@ -27,7 +27,12 @@ contract Whitelist is TokenValidator, Owned, EIP820Implementer {
     return result;
   }
 
-  function check(address _token, address _from, address _to, uint256 _amount) public /* view */ returns (uint8 resultCode) {
+  function check(
+    address _token,
+    address _from,
+    address _to,
+    uint256 _amount
+  ) public /* view */ returns (uint8 resultCode) {
     bool  fromOk = false;
     bool  toOk   = false;
     uint8 result = 0;
