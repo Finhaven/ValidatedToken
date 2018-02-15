@@ -51,7 +51,7 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
 
     // Validation Helpers
 
-    function validate(address _user) internal returns (uint8 resultCode) {
+    function validate(address _user) private returns (uint8 resultCode) {
         return validator.check(this, _user);
     }
 
@@ -59,7 +59,7 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
         address _from,
         address _to,
         uint256 _amount
-    ) internal returns (uint8 resultCode) {
+    ) private returns (uint8 resultCode) {
         return validator.check(this, _from, _to, _amount);
     }
 

@@ -34,7 +34,7 @@ contract DiffToken is ReferenceToken {
 
     // Validation Helpers
 
-    function validate(address _user) internal returns (uint8 resultCode) {
+    function validate(address _user) private returns (uint8 resultCode) {
         return validator.check(this, _user);
     }
 
@@ -42,7 +42,7 @@ contract DiffToken is ReferenceToken {
         address _from,
         address _to,
         uint256 _amount
-    ) internal returns (uint8 resultCode) {
+    ) private returns (uint8 resultCode) {
         return validator.check(this, _from, _to, _amount);
     }
 
