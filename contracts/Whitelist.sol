@@ -9,8 +9,6 @@ import "./TokenValidator.sol";
 contract Whitelist is TokenValidator, Owned, EIP820Implementer {
   mapping(address => bool) private onlyOwner whitelist;
 
-  function Whitelist() public { }
-
   function check(address _token, address _user) public /* view */ returns (uint8 resultCode) {
     return whitelist[_user] ? 1 : 0;
   }
