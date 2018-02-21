@@ -13,8 +13,8 @@ contract SimpleAuthorization is TokenValidator, Owned, EIP820Implementer {
       setInterfaceImplementation("TokenValidator", this);
   }
 
-  function check(address _token, address _user) public /* view */ returns (uint8 resultCode) {
-      return authorizations[_user] ? 1 : 0;
+  function check(address _token, address _address) public /* view */ returns (uint8 resultCode) {
+      return authorizations[_address] ? 1 : 0;
   }
 
   function check(
@@ -26,7 +26,7 @@ contract SimpleAuthorization is TokenValidator, Owned, EIP820Implementer {
       return (authorizations[_from] && authorizations[_to]) ? 1 : 0;
   }
 
-  function setAuthorized(address _user, bool _status) public onlyOwner {
-      authorizations[_user] = _status;
+  function setAuthorized(address _address, bool _status) public onlyOwner {
+      authorizations[_address] = _status;
   }
 }
