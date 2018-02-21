@@ -9,8 +9,12 @@ import "./TokenValidator.sol";
 contract Whitelist is TokenValidator, Owned, EIP820Implementer {
   mapping(address => bool) private onlyOwner whitelist;
 
+  function Whitelist() public {
+      setInterfaceImplementation("TokenValidator", this);
+  }
+
   function check(address _token, address _user) public /* view */ returns (uint8 resultCode) {
-    return whitelist[_user] ? 1 : 0;
+      return whitelist[_user] ? 1 : 0;
   }
 
   function check(
@@ -19,7 +23,7 @@ contract Whitelist is TokenValidator, Owned, EIP820Implementer {
       address _to,
       uint256 _amount
   ) public /* view */ returns (uint8 resultCode) {
-    return (whitelist[_from] && whitelist[_to]) ? 1 : 0;
+      return (whitelist[_from] && whitelist[_to]) ? 1 : 0;
   }
 
   function updateWhitelist(address _user, bool _status) public onlyOwner {
