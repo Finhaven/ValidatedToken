@@ -41,6 +41,8 @@ governments, and identity services. By implementing the `TokenValidator` interfa
 these validation services can interact with other validators to check information
 that they don't own.
 
+![](https://raw.githubusercontent.com/Finhaven/ValidatedToken/master/assets/diagram.png?token=ABANcIE7drQhztiQvBrtwOeLgKnXAWifks5aljr9wA%3D%3D)
+
 ## Links
 
 * [EIP](https://github.com/Finhaven/EIPs/blob/validator/EIPS/eip-999.md)
