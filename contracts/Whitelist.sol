@@ -7,7 +7,7 @@ import "./TokenValidator.sol";
 // Reference Validator
 
 contract Whitelist is TokenValidator, Owned, EIP820Implementer {
-  mapping(address => bool) private onlyOwner whitelist;
+  mapping(address => bool) private whitelist;
 
   function Whitelist() public {
       setInterfaceImplementation("TokenValidator", this);
