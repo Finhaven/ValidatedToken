@@ -12,15 +12,15 @@ that expose two `check` functions:
 * `check(address token, address to, address from, uint256 amout) returns (uint8 status)`
 
 ```
-    ┌──────┐
+    +------+
     │Caller|
-    └─┬──↑─┘
-      │  │
+    +------+
+      │  ↑
 check │  │ status
-      │  │
-  ┌───↓──┴──┐
-  │Validator│
-  └─────────┘
+      ↓  │
+  +---------+
+  |Validator|
+  +---------+
 ```
 
 Why list this as a `Caller` an not `Token`? Because validators may be arranged into
@@ -40,28 +40,6 @@ Each of these validation services may be operated variously by the travel agency
 governments, and identity services. By implementing the `TokenValidator` interface,
 these validation services can interact with other validators to check information
 that they don't own.
-
-```
-                 ┌───────────┐
-                 │TravelToken|
-Token            └─────┬─────┘
-┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┼┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-Validators     ┌───────┴───────┐
-               │TravelValidator│
-               └──┬────┬────┬──┘ ┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-                  │    │    │    ┊           Other
-     ┌────────────┘    │    └────┼────────┐
-     │                 │         ┊        │
-┌────┴────┐      ┌─────┴────┐    ┊ ┌──────┴──────┐
-│IDChecker│      │VisaIssuer│    ┊ │HealthRecords|
-└────┬────┘      └─────┬────┘    ┊ └─────────────┘
-     │                 │         └┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-     └─────┐     ┌─────┘
-           │     │
-         ┌─┴─────┴─┐
-         |WatchList|
-         └─────────┘
-```
 
 ## Links
 
