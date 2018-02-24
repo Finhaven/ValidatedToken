@@ -9,7 +9,7 @@ import "./TokenValidator.sol";
 contract SimpleAuthorization is TokenValidator, Owned, EIP820Implementer {
   mapping(address => bool) private authorizations;
 
-  function Whitelist() public {
+  function SimpleAuthorization() public {
       setInterfaceImplementation("TokenValidator", this);
   }
 
