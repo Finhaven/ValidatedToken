@@ -45,4 +45,4 @@ that they don't own.
 
 ## Links
 
-* [EIP](https://github.com/Finhaven/EIPs/blob/validator/EIPS/eip-999.md)
+* [EIP](https://github.com/ethereum/EIPs/pull/902)
