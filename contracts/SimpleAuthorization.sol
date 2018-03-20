@@ -1,12 +1,12 @@
 pragma solidity ^0.4.19;
 
-import "eip820/contracts/EIP820Implementer.sol";
-import "giveth-common-contracts/contracts/Owned.sol";
+import "./dependencies/ERC820Implementer.sol";
+import "./dependencies/Owned.sol";
 import "./TokenValidator.sol";
 
 // Reference Validator
 
-contract SimpleAuthorization is TokenValidator, Owned, EIP820Implementer {
+contract SimpleAuthorization is TokenValidator, Owned, ERC820Implementer {
   mapping(address => bool) private authorizations;
 
   function SimpleAuthorization() public {

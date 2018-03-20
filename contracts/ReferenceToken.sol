@@ -3,17 +3,17 @@ pragma solidity ^0.4.19;
 import "./ValidatedToken.sol";
 import "./TokenValidator.sol";
 
-import "eip820/contracts/EIP820Implementer.sol";
-import "giveth-common-contracts/contracts/Owned.sol";
-import "giveth-common-contracts/contracts/SafeMath.sol";
+import "./dependencies/ERC820Implementer.sol";
+import "./dependencies/Owned.sol";
+import "./dependencies/SafeMath.sol";
 
-import "eip777/contracts/Ierc20.sol";
-import "eip777/contracts/Ierc777.sol";
-import "eip777/contracts/ITokenRecipient.sol";
+import "./dependencies/ERC20Token.sol";
+import "./dependencies/ERC777Token.sol";
+import "./dependencies/ERC777TokensRecipient.sol";
 
 // Adjusted from Ierc777/ReferenceToken.sol
 
-contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
+contract ReferenceToken is Owned, ERC20Token, ERC777Token, ERC820Implementer {
     using SafeMath for uint256;
 
     string private mName;
@@ -121,7 +121,7 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
 
         callRecipient(msg.sender, 0x0, _tokenHolder, _amount, "", _operatorData, true);
 
-        Minted(_tokenHolder, _amount, msg.sender, _operatorData);
+        Minted(msg.sender, _tokenHolder, _amount, _operatorData);
         if (mErc20compatible) { Transfer(0x0, _tokenHolder, _amount); }
     }
 
@@ -132,7 +132,7 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
         mBalances[_tokenHolder] = mBalances[_tokenHolder].sub(_amount);
         mTotalSupply = mTotalSupply.sub(_amount);
 
-        Burned(_tokenHolder, _amount);
+        Burned(msg.sender, _tokenHolder, _amount, _userData, _operatorData);
         if (mErc20compatible) { Transfer(_tokenHolder, 0x0, _amount); }
     }
 
@@ -212,7 +212,7 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
 
         callRecipient(_operator, _from, _to, _amount, _userData, _operatorData, _preventLocking);
 
-        Sent(_from, _to, _amount, _userData, _operator, _operatorData);
+        Sent(_operator, _from, _to, _amount, _userData, _operatorData);
         if (mErc20compatible) { Transfer(_from, _to, _amount); }
     }
 
@@ -225,11 +225,11 @@ contract ReferenceToken is Owned, Ierc20, Ierc777, EIP820Implementer {
         bytes _operatorData,
         bool _preventLocking
     ) private {
-        address recipientImplementation = interfaceAddr(_to, "ITokenRecipient");
+        address recipientImplementation = interfaceAddr(_to, "ERC777TokensRecipient");
 
         if (recipientImplementation != 0) {
-          ITokenRecipient(recipientImplementation)
-            .tokensReceived(_from, _to, _amount, _userData, _operator, _operatorData);
+          ERC777TokensRecipient(recipientImplementation)
+            .tokensReceived(_operator, _from, _to, _amount, _userData, _operatorData);
         } else if (_preventLocking) {
             require(isRegularAddress(_to));
         }

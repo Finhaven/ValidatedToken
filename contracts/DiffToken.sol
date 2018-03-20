@@ -3,8 +3,8 @@ pragma solidity ^0.4.19;
 import "./ValidatedToken.sol";
 import "./TokenValidator.sol";
 
-import "eip777/contracts/ReferenceToken.sol";
-import "giveth-common-contracts/contracts/SafeMath.sol";
+import "./ReferenceToken.sol";
+import "./dependencies/SafeMath.sol";
 
 contract DiffToken is ReferenceToken {
     string private mName;
@@ -28,7 +28,7 @@ contract DiffToken is ReferenceToken {
         string         _symbol,
         uint256        _granularity,
         TokenValidator _validator
-    ) public ReferenceToken(_name, _symbol, _granularity) {
+    ) public ReferenceToken(_name, _symbol, _granularity, _validator) {
         validator = TokenValidator(_validator);
     }
 
@@ -97,7 +97,7 @@ contract DiffToken is ReferenceToken {
 
         callRecipient(_operator, _from, _to, _amount, _userData, _operatorData, _preventLocking);
 
-        Sent(_from, _to, _amount, _userData, _operator, _operatorData);
+        Sent(_operator, _from, _to, _amount, _userData, _operatorData);
         if (mErc20compatible) { Transfer(_from, _to, _amount); }
     }
 
@@ -110,11 +110,11 @@ contract DiffToken is ReferenceToken {
         bytes   _operatorData,
         bool    _preventLocking
     ) private {
-        address recipientImplementation = interfaceAddr(_to, "ITokenRecipient");
+        address recipientImplementation = interfaceAddr(_to, "ERC777TokensRecipient");
 
         if (recipientImplementation != 0) {
-            ITokenRecipient(recipientImplementation)
-              .tokensReceived(_from, _to, _amount, _userData, _operator, _operatorData);
+            ERC777TokensRecipient(recipientImplementation)
+              .tokensReceived(_operator, _from, _to, _amount, _userData, _operatorData);
         } else if (_preventLocking) {
             require(isRegularAddress(_to));
         }
