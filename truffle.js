@@ -1,4 +1,25 @@
+var HDWalletProvider = require("truffle-hdwallet-provider");
+
+var mnemonic = "thunder scrap actual rate shallow snack health unit couch list amount age";
 module.exports = {
-  // See <http://truffleframework.com/docs/advanced/configuration>
-  // to customize your Truffle configuration!
+  networks: {
+    rinkeby: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/0oGAYXzE57nJ4xYI6M0N")
+      },
+      network_id: "*",
+    },
+    development: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '*', // Match any network id
+      // gas: Number(4712388 * 1.1).toFixed(0) // increase the default limit of 4712388
+      gas: 6712388,
+    },
+  },
+  mocha: {
+    // reporter: 'eth-gas-reporter',
+    growl: true,
+  },
+
 };

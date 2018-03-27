@@ -45,8 +45,8 @@ contract ReferenceToken is Owned, ERC20Token, ERC777Token, ERC820Implementer {
         mGranularity = _granularity;
         validator = TokenValidator(_validator);
 
-        setInterfaceImplementation("Ierc777", this);
-        setInterfaceImplementation("Ierc20", this);
+        // setInterfaceImplementation("Ierc777", this);
+        // setInterfaceImplementation("Ierc20", this);
     }
 
     // Validation Helpers
