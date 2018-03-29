@@ -18,28 +18,60 @@ contract('ReferenceToken', (accounts) => {
     assert.isNotNull(referenceToken);
   });
 
-  it('creator should be able to authorize and check auth', async () => {
+  it('authorized should get tokens', async () => {
       targetAccount = accounts[1];
-      authorizedBefore = await simpleAuthorization.check.call(0x0, targetAccount, targetAccount, 0);
-      assert(authorizedBefore == 0, 'should not be already authorized');
+      const amountToMint = 100;
+
       await simpleAuthorization.setAuthorized(targetAccount, true);
-      authorizedAfter = await simpleAuthorization.check.call(0x0, targetAccount, targetAccount, 0);
-      assert(authorizedAfter == 1, 'should become authorized');
-      await simpleAuthorization.setAuthorized(targetAccount, false);
-      authorizedAfter = await simpleAuthorization.check.call(0x0, targetAccount, targetAccount, 0);
-      assert(authorizedAfter == 0, 'should become unauthorized');
+      await referenceToken.mint(targetAccount, amountToMint * granularity, '');
+
+      balance = await referenceToken.balanceOf(targetAccount);
+      assert.equal(balance, amountToMint * granularity);
   });
 
-  it('transfer should pass validation only when both accounts are authorized', async () => {
+  it('reference token receiver (mint) should be authorized', async () => {
+      targetAccount = accounts[1];
+      const amountToMint = 100;
+
+      try {
+        await referenceToken.mint(targetAccount, amountToMint * granularity, '');
+        throw "Should have failed";
+      } catch (e) {
+        assert(e.message == "VM Exception while processing transaction: revert", "incorrect error was thrown");
+      }
+      await simpleAuthorization.setAuthorized(targetAccount, true);
+      await referenceToken.mint(targetAccount, amountToMint * granularity, '');
+  });
+
+  it('reference token receiver (transfer) should be authorized', async () => {
       sender = accounts[1];
       receiver = accounts[2];
-      authorizedBefore = await simpleAuthorization.check.call(0x0, sender, receiver, 0);
-      assert(authorizedBefore == 0, 'should not be already authorized');
-      await simpleAuthorization.setAuthorized(receiver, true);
-      authorizedAfter = await simpleAuthorization.check.call(0x0, sender, receiver, 0);
-      assert(authorizedAfter == 0, 'should still be unauthorized');
+      const amount = 100;
       await simpleAuthorization.setAuthorized(sender, true);
-      authorizedAfter = await simpleAuthorization.check.call(0x0, sender, receiver, 0);
-      assert(authorizedAfter == 1, 'should become authorized');
+      await referenceToken.mint(sender, amount * granularity, '');
+      try {
+        await referenceToken.transfer(receiver, amount * granularity, {from: sender});
+        throw "Should have failed";
+      } catch (e) {
+        assert(e.message == "VM Exception while processing transaction: revert", "incorrect error was thrown");
+      }
+      receiverBalance = await referenceToken.balanceOf(receiver);
+      assert.equal(receiverBalance, 0);
   });
+
+  it('tranfer tokens', async () => {
+      sender = accounts[1];
+      receiver = accounts[2];
+      const amount = 100;
+      await simpleAuthorization.setAuthorized(sender, true);
+      await simpleAuthorization.setAuthorized(receiver, true);
+      await referenceToken.mint(sender, amount * granularity, '');
+      await referenceToken.transfer(receiver, amount * granularity, {from: sender});
+
+      receiverBalance = await referenceToken.balanceOf(receiver);
+      assert.equal(receiverBalance, amount * granularity);
+  });
+
+
+
 });

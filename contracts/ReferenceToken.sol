@@ -225,13 +225,13 @@ contract ReferenceToken is Owned, ERC20Token, ERC777Token, ERC820Implementer {
         bytes _operatorData,
         bool _preventLocking
     ) private {
-        address recipientImplementation = interfaceAddr(_to, "ERC777TokensRecipient");
+        /* address recipientImplementation = interfaceAddr(_to, "ERC777TokensRecipient");
 
         if (recipientImplementation != 0) {
           ERC777TokensRecipient(recipientImplementation)
             .tokensReceived(_operator, _from, _to, _amount, _userData, _operatorData);
         } else if (_preventLocking) {
             require(isRegularAddress(_to));
-        }
+        } */
     }
 }
