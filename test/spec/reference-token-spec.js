@@ -1,6 +1,17 @@
 const SimpleAuthorization = artifacts.require('SimpleAuthorization');
 const ReferenceToken = artifacts.require('ReferenceToken');
 
+async function failTransaction(func, args, errorMessage) {
+  try {
+    await func.apply(this, args);
+    throw "Should have failed";
+  } catch (e) {
+    assert.equal(e.message, errorMessage);
+  }
+}
+
+revertMessage = "VM Exception while processing transaction: revert";
+
 contract('ReferenceToken', (accounts) => {
   let simpleAuthorization;
   let referenceToken;
@@ -23,7 +34,10 @@ contract('ReferenceToken', (accounts) => {
       const amountToMint = 100;
 
       await simpleAuthorization.setAuthorized(targetAccount, true);
-      await referenceToken.mint(targetAccount, amountToMint * granularity, '');
+      mintResult = await referenceToken.mint(targetAccount, amountToMint * granularity);
+      validationEvent = mintResult.logs[0];
+      assert.equal(validationEvent.event, 'Validation');
+      assert.equal(validationEvent.args.user, targetAccount);
 
       balance = await referenceToken.balanceOf(targetAccount);
       assert.equal(balance, amountToMint * granularity);
@@ -32,15 +46,9 @@ contract('ReferenceToken', (accounts) => {
   it('reference token receiver (mint) should be authorized', async () => {
       targetAccount = accounts[1];
       const amountToMint = 100;
-
-      try {
-        await referenceToken.mint(targetAccount, amountToMint * granularity, '');
-        throw "Should have failed";
-      } catch (e) {
-        assert(e.message == "VM Exception while processing transaction: revert", "incorrect error was thrown");
-      }
+      await failTransaction(referenceToken.mint, [targetAccount, amountToMint * granularity], revertMessage);
       await simpleAuthorization.setAuthorized(targetAccount, true);
-      await referenceToken.mint(targetAccount, amountToMint * granularity, '');
+      await referenceToken.mint(targetAccount, amountToMint * granularity);
   });
 
   it('reference token receiver (transfer) should be authorized', async () => {
@@ -48,13 +56,8 @@ contract('ReferenceToken', (accounts) => {
       receiver = accounts[2];
       const amount = 100;
       await simpleAuthorization.setAuthorized(sender, true);
-      await referenceToken.mint(sender, amount * granularity, '');
-      try {
-        await referenceToken.transfer(receiver, amount * granularity, {from: sender});
-        throw "Should have failed";
-      } catch (e) {
-        assert(e.message == "VM Exception while processing transaction: revert", "incorrect error was thrown");
-      }
+      await referenceToken.mint(sender, amount * granularity);
+      await failTransaction(referenceToken.transfer, [receiver, amount * granularity, {from: sender}], revertMessage);
       receiverBalance = await referenceToken.balanceOf(receiver);
       assert.equal(receiverBalance, 0);
   });
@@ -63,15 +66,22 @@ contract('ReferenceToken', (accounts) => {
       sender = accounts[1];
       receiver = accounts[2];
       const amount = 100;
+      authorized = await simpleAuthorization.check.call(referenceToken.address, sender, receiver, amount);
+      assert.equal(authorized, false);
+
       await simpleAuthorization.setAuthorized(sender, true);
       await simpleAuthorization.setAuthorized(receiver, true);
-      await referenceToken.mint(sender, amount * granularity, '');
-      await referenceToken.transfer(receiver, amount * granularity, {from: sender});
+      await referenceToken.mint(sender, amount * granularity);
+      transferResult = await referenceToken.transfer(receiver, amount * granularity, {from: sender});
+
+      validationEvent = transferResult.logs[0];
+      assert.equal(validationEvent.event, 'Validation');
+      assert.equal(validationEvent.args.from, sender);
+      assert.equal(validationEvent.args.to, receiver);
+      assert.equal(validationEvent.args.value, amount * granularity);
 
       receiverBalance = await referenceToken.balanceOf(receiver);
       assert.equal(receiverBalance, amount * granularity);
   });
-
-
 
 });

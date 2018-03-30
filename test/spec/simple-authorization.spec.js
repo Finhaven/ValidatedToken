@@ -14,7 +14,7 @@ contract('SimpleAuthorization', (accounts) => {
 
 
   // 4-parameter checks are used because truffle does not support overloading and can't find check(A, B)
-  it('creator should be able to authorize and check auth', async () => {
+  it('ownder should be able to authorize and check auth', async () => {
       targetAccount = accounts[1];
       authorizedBefore = await simpleAuthorization.check.call(0x0, targetAccount, targetAccount, 0);
       assert(authorizedBefore == 0, 'should not be already authorized');
