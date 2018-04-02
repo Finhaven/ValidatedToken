@@ -1,8 +1,8 @@
 # Contributing
 
-Welcome to `DealToken`
+Welcome to `ValidatedToken`
 
-* Suggest topics in the [Issues](https://github.com/Finhaven/DealToken/issues/new).
+* Suggest topics in the [Issues](https://github.com/Finhaven/ValidatedToken/issues/new).
 * [How to write the perfect pull request](https://github.com/blog/1943-how-to-write-the-perfect-pull-request)
 * Follow the [Campfire Rule](http://programmer.97things.oreilly.com/wiki/index.php/The_Boy_Scout_Rule) with all changes
 
