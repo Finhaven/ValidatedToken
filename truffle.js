@@ -1,13 +1,13 @@
-var HDWalletProvider = require("truffle-hdwallet-provider");
+const HDWalletProvider = require('truffle-hdwallet-provider');
 
-var mnemonic = "thunder scrap actual rate shallow snack health unit couch list amount age";
+const mnemonic = 'thunder scrap actual rate shallow snack health unit couch list amount age';
 module.exports = {
   networks: {
     rinkeby: {
-      provider: function() {
-        return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/0oGAYXzE57nJ4xYI6M0N")
+      provider() {
+        return new HDWalletProvider(mnemonic, 'https://rinkeby.infura.io/0oGAYXzE57nJ4xYI6M0N');
       },
-      network_id: "*",
+      network_id: '*',
     },
     development: {
       host: 'localhost',
