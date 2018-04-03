@@ -1,6 +1,8 @@
 # Validated Token Example Contracts
 ## Status: DRAFT
 
+[![CircleCI](https://circleci.com/gh/Finhaven/ValidatedToken.svg?style=svg)](https://circleci.com/gh/Finhaven/ValidatedToken)
+
 Example code for the Vaidated Token EIP
 
 ## Architecture
