@@ -1,27 +1,25 @@
 pragma solidity ^0.4.19;
 
-import "./dependencies/ERC820Implementer.sol";
 import "./dependencies/Owned.sol";
 import "./TokenValidator.sol";
 
 // Reference Validator
 
-contract SimpleAuthorization is TokenValidator, Owned, ERC820Implementer {
+contract SimpleAuthorization is TokenValidator, Owned {
   mapping(address => bool) private authorizations;
 
   function SimpleAuthorization() public {
-      setInterfaceImplementation("TokenValidator", this);
   }
 
-  function check(address _token, address _address) public /* view */ returns (uint8 resultCode) {
+  function check(address /* token */, address _address) public /* view */ returns (uint8 resultCode) {
       return authorizations[_address] ? 1 : 0;
   }
 
   function check(
-      address _token,
+      address /* _token */,
       address _from,
       address _to,
-      uint256 _amount
+      uint256 /* _amount */
   ) public /* view */ returns (uint8 resultCode) {
       return (authorizations[_from] && authorizations[_to]) ? 1 : 0;
   }
