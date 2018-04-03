@@ -1,5 +1,9 @@
-const SimpleAuthorization = artifacts.require('SimpleAuthorization');
-const ReferenceToken = artifacts.require('ReferenceToken');
+const { assert } = require('chai');
+
+const SimpleAuthorization = artifacts.require('SimpleAuthorization'); // eslint-disable-line no-undef
+const ReferenceToken = artifacts.require('ReferenceToken'); // eslint-disable-line no-undef
+
+const revertMessage = 'VM Exception while processing transaction: revert';
 
 async function failTransaction(func, args, errorMessage) {
   try {
@@ -10,16 +14,14 @@ async function failTransaction(func, args, errorMessage) {
   }
 }
 
-const revertMessage = 'VM Exception while processing transaction: revert';
-
-contract('ReferenceToken', (accounts) => {
+contract('ReferenceToken', (accounts) => { // eslint-disable-line no-undef
   const name = 'testToken';
   const symbol = 'TKN';
   const granularity = 16;
   const amount = 100;
 
-  const [ , sender, receiver] = accounts;
-  const [_, targetAccount] = accounts;
+  const [, sender, receiver] = accounts;
+  const [, targetAccount] = accounts;
 
   let simpleAuthorization;
   let referenceToken;
@@ -48,17 +50,24 @@ contract('ReferenceToken', (accounts) => {
   });
 
   it('reference token receiver (mint) should be authorized', async () => {
-    await failTransaction(referenceToken.mint, [targetAccount, amount * granularity], revertMessage);
+    await failTransaction(
+      referenceToken.mint,
+      [targetAccount, amount * granularity],
+      revertMessage,
+    );
+
     await simpleAuthorization.setAuthorized(targetAccount, true);
     await referenceToken.mint(targetAccount, amount * granularity);
   });
 
   it('reference token receiver (transfer) should be authorized', async () => {
-    const [ , sender, receiver] = accounts;
-
     await simpleAuthorization.setAuthorized(sender, true);
     await referenceToken.mint(sender, amount * granularity);
-    await failTransaction(referenceToken.transfer, [receiver, amount * granularity, { from: sender }], revertMessage);
+    await failTransaction(
+      referenceToken.transfer,
+      [receiver, amount * granularity, { from: sender }],
+      revertMessage,
+    );
 
     const receiverBalance = await referenceToken.balanceOf(receiver);
     assert.equal(receiverBalance, 0);
@@ -74,7 +83,8 @@ contract('ReferenceToken', (accounts) => {
     await simpleAuthorization.setAuthorized(receiver, true);
     await referenceToken.mint(sender, amount * granularity);
 
-    const transferResult = await referenceToken.transfer(receiver, amount * granularity, { from: sender });
+    const transferResult =
+      await referenceToken.transfer(receiver, amount * granularity, { from: sender });
 
     const validationEvent = transferResult.logs[0];
     assert.equal(validationEvent.event, 'Validation');

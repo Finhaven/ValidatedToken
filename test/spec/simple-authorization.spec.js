@@ -1,7 +1,9 @@
+const { assert } = require('chai');
+
 // Because truffle does not support overloading
 const SimpleAuthorization = artifacts.require('ExtendedSimpleAuthorization'); // eslint-disable-line no-undef
 
-contract('SimpleAuthorization', (accounts) => {
+contract('SimpleAuthorization', (accounts) => { // eslint-disable-line no-undef
   let simpleAuthorization;
 
   beforeEach(async () => {
@@ -30,7 +32,7 @@ contract('SimpleAuthorization', (accounts) => {
   });
 
   it('transfer should pass validation only when both accounts are authorized', async () => {
-    const [ , sender, receiver] = accounts;
+    const [, sender, receiver] = accounts;
 
     const authorizedBefore = await simpleAuthorization.check4.call(0x0, sender, receiver, 0);
     assert.equal(authorizedBefore, 0, 'should not be already authorized');
