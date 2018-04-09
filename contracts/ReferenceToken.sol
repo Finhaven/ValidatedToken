@@ -1,11 +1,10 @@
 pragma solidity ^0.4.19;
 
-import "./ValidatedToken.sol";
-import "./TokenValidator.sol";
+import './ValidatedToken.sol';
+import './TokenValidator.sol';
 
 import "./../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol";
-
 import "./../node_modules/zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 
 contract ReferenceToken is Ownable, ERC20, ValidatedToken {
@@ -41,7 +40,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
 
     // Validation Helpers
 
-    function validate(address _user) private returns (uint8) {
+    function validate(address _user) private returns (byte) {
         uint8 checkResult = validator.check(this, _user);
         Validation(checkResult, _user);
         return checkResult;
@@ -51,7 +50,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         address _from,
         address _to,
         uint256 _amount
-    ) private returns (uint8) {
+    ) private returns (byte) {
         uint8 checkResult = validator.check(this, _from, _to, _amount);
         Validation(checkResult, _from, _to, _amount);
         return checkResult;
@@ -59,10 +58,9 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
 
     // Status Code Helpers
 
-    function requireOk(uint8 _statusCode) internal pure {
-      require(_statusCode == 1);
+    function requireOk(byte _statusCode) internal pure {
+      require((_statusCode & hex"0F") == 1);
     }
-
 
     function name() public constant returns (string) { return mName; }
 
