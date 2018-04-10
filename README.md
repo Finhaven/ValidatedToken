@@ -10,8 +10,8 @@ Example code for the Vaidated Token EIP
 The basic relationship of this protocol is very simple: there are validators
 that expose two `check` functions:
 
-* `check(address token, address user) returns (uint8 status)`
-* `check(address token, address to, address from, uint256 amout) returns (uint8 status)`
+* `check(address token, address user) returns (byte status)`
+* `check(address token, address to, address from, uint256 amout) returns (byte status)`
 
 ```
     +------+
