@@ -1,7 +1,7 @@
 pragma solidity ^0.4.19;
 
-import './ValidatedToken.sol';
-import './TokenValidator.sol';
+import "./ValidatedToken.sol";
+import "./TokenValidator.sol";
 
 import "./../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol";
