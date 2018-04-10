@@ -77,7 +77,7 @@ contract('ReferenceToken', (accounts) => { // eslint-disable-line no-undef
     const authorized =
       await simpleAuthorization.check.call(referenceToken.address, sender, receiver, amount);
 
-    assert.equal(authorized, false);
+    assert.equal(authorized, '0x10');
 
     await simpleAuthorization.setAuthorized(sender, true);
     await simpleAuthorization.setAuthorized(receiver, true);
