@@ -21,7 +21,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
     mapping(address => mapping(address => uint256)) private mAllowed;
 
     // Single validator
-    TokenValidator private validator;
+    TokenValidator internal validator;
 
     function ReferenceToken(
         string         _name,
@@ -40,7 +40,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
 
     // Validation Helpers
 
-    function validate(address _user) private returns (byte) {
+    function validate(address _user) internal returns (byte) {
         byte checkResult = validator.check(this, _user);
         Validation(checkResult, _user);
         return checkResult;
@@ -50,7 +50,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         address _from,
         address _to,
         uint256 _amount
-    ) private returns (byte) {
+    ) internal returns (byte) {
         byte checkResult = validator.check(this, _from, _to, _amount);
         Validation(checkResult, _from, _to, _amount);
         return checkResult;
@@ -133,14 +133,25 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         address _from,
         address _to,
         uint256 _amount
-    ) private {
+    ) internal {
+        require(canTransfer(_from, _to, _amount));
         requireMultiple(_amount);
-        require(_to != address(0));          // forbid sending to 0x0 (=burning)
-        require(mBalances[_from] >= _amount); // ensure enough funds
-        requireOk(validate(_from, _to, _amount)); // Ensure passes validation
 
         mBalances[_from] = mBalances[_from].sub(_amount);
         mBalances[_to] = mBalances[_to].add(_amount);
+
         Transfer(_from, _to, _amount);
+    }
+
+    function canTransfer(
+        address _from,
+        address _to,
+        uint256 _amount
+    ) internal returns (bool) {
+        return (
+            (_to != address(0)) // Forbid sending to 0x0 (=burning)
+            && (mBalances[_from] >= _amount) // Ensure enough funds
+            && isOk(validate(_from, _to, _amount)) // Ensure passes validation
+        );
     }
 }
