@@ -66,27 +66,27 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         require(isOk(_statusCode));
     }
 
-    function name() external constant returns (string) {
+    function name() public constant returns (string) {
         return mName;
     }
 
-    function symbol() external constant returns(string) {
+    function symbol() public constant returns(string) {
         return mSymbol;
     }
 
-    function granularity() external constant returns(uint256) {
+    function granularity() public constant returns(uint256) {
         return mGranularity;
     }
 
-    function decimals() external constant returns (uint8) {
+    function decimals() public constant returns (uint8) {
         return uint8(18);
     }
 
-    function totalSupply() external constant returns(uint256) {
+    function totalSupply() public constant returns(uint256) {
         return mTotalSupply;
     }
 
-    function balanceOf(address _tokenHolder) external constant returns (uint256) {
+    function balanceOf(address _tokenHolder) public constant returns (uint256) {
         return mBalances[_tokenHolder];
     }
 
@@ -94,7 +94,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         require(_amount.div(mGranularity).mul(mGranularity) == _amount);
     }
 
-    function approve(address _spender, uint256 _amount) external returns (bool success) {
+    function approve(address _spender, uint256 _amount) public returns (bool success) {
         if(validate(msg.sender, _spender, _amount) != 1) { return false; }
 
         mAllowed[msg.sender][_spender] = _amount;
@@ -102,7 +102,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         return true;
     }
 
-    function allowance(address _owner, address _spender) external constant returns (uint256 remaining) {
+    function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {
         return mAllowed[_owner][_spender];
     }
 
@@ -116,12 +116,12 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         emit Transfer(0x0, _tokenHolder, _amount);
     }
 
-    function transfer(address _to, uint256 _amount) external returns (bool success) {
+    function transfer(address _to, uint256 _amount) public returns (bool success) {
         doSend(msg.sender, _to, _amount);
         return true;
     }
 
-    function transferFrom(address _from, address _to, uint256 _amount) external returns (bool success) {
+    function transferFrom(address _from, address _to, uint256 _amount) public returns (bool success) {
         require(_amount <= mAllowed[_from][msg.sender]);
 
         mAllowed[_from][msg.sender] = mAllowed[_from][msg.sender].sub(_amount);
