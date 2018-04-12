@@ -5,7 +5,7 @@ import "./SimpleAuthorization.sol";
 // Truffle overloading workaround
 contract ExtendedSimpleAuthorization is SimpleAuthorization {
     function check2(address _token, address _address) public /* view */ returns (byte resultCode) {
-        return check(_token,_address);
+        return this.check(_token,_address);
     }
 
     function check4(
@@ -14,7 +14,7 @@ contract ExtendedSimpleAuthorization is SimpleAuthorization {
         address _to,
         uint256 _amount
     ) public /* view */ returns (byte resultCode) {
-        return check(_token, _from, _to, _amount);
+        return this.check(_token, _from, _to, _amount);
     }
 
 }

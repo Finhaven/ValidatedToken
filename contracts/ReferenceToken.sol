@@ -42,7 +42,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
 
     function validate(address _user) internal returns (byte) {
         byte checkResult = validator.check(this, _user);
-        Validation(checkResult, _user);
+        emit Validation(checkResult, _user);
         return checkResult;
     }
 
@@ -52,7 +52,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         uint256 _amount
     ) internal returns (byte) {
         byte checkResult = validator.check(this, _from, _to, _amount);
-        Validation(checkResult, _from, _to, _amount);
+        emit Validation(checkResult, _from, _to, _amount);
         return checkResult;
     }
 
@@ -66,27 +66,27 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         require(isOk(_statusCode));
     }
 
-    function name() public constant returns (string) {
+    function name() external constant returns (string) {
         return mName;
     }
 
-    function symbol() public constant returns(string) {
+    function symbol() external constant returns(string) {
         return mSymbol;
     }
 
-    function granularity() public constant returns(uint256) {
+    function granularity() external constant returns(uint256) {
         return mGranularity;
     }
 
-    function decimals() public constant returns (uint8) {
+    function decimals() external constant returns (uint8) {
         return uint8(18);
     }
 
-    function totalSupply() public constant returns(uint256) {
+    function totalSupply() external constant returns(uint256) {
         return mTotalSupply;
     }
 
-    function balanceOf(address _tokenHolder) public constant returns (uint256) {
+    function balanceOf(address _tokenHolder) external constant returns (uint256) {
         return mBalances[_tokenHolder];
     }
 
@@ -94,15 +94,15 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         require(_amount.div(mGranularity).mul(mGranularity) == _amount);
     }
 
-    function approve(address _spender, uint256 _amount) public returns (bool success) {
+    function approve(address _spender, uint256 _amount) external returns (bool success) {
         if(validate(msg.sender, _spender, _amount) != 1) { return false; }
 
         mAllowed[msg.sender][_spender] = _amount;
-        Approval(msg.sender, _spender, _amount);
+        emit Approval(msg.sender, _spender, _amount);
         return true;
     }
 
-    function allowance(address _owner, address _spender) public constant returns (uint256 remaining) {
+    function allowance(address _owner, address _spender) external constant returns (uint256 remaining) {
         return mAllowed[_owner][_spender];
     }
 
@@ -113,15 +113,15 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         mTotalSupply = mTotalSupply.add(_amount);
         mBalances[_tokenHolder] = mBalances[_tokenHolder].add(_amount);
 
-        Transfer(0x0, _tokenHolder, _amount);
+        emit Transfer(0x0, _tokenHolder, _amount);
     }
 
-    function transfer(address _to, uint256 _amount) public returns (bool success) {
+    function transfer(address _to, uint256 _amount) external returns (bool success) {
         doSend(msg.sender, _to, _amount);
         return true;
     }
 
-    function transferFrom(address _from, address _to, uint256 _amount) public returns (bool success) {
+    function transferFrom(address _from, address _to, uint256 _amount) external returns (bool success) {
         require(_amount <= mAllowed[_from][msg.sender]);
 
         mAllowed[_from][msg.sender] = mAllowed[_from][msg.sender].sub(_amount);
@@ -140,7 +140,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         mBalances[_from] = mBalances[_from].sub(_amount);
         mBalances[_to] = mBalances[_to].add(_amount);
 
-        Transfer(_from, _to, _amount);
+        emit Transfer(_from, _to, _amount);
     }
 
     function canTransfer(
