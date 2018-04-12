@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-pragma solidity ^0.4.19; // solhint-disable-line compiler-fixed
+pragma solidity ^0.4.21; // solhint-disable-line compiler-fixed
 
 
 interface ERC20Token {
