@@ -13,7 +13,7 @@ contract SimpleAuthorization is TokenValidator, Ownable {
     function check(
         address /* token */,
         address _address
-    ) public /* view */ returns (byte resultCode) {
+    ) external returns (byte resultCode) {
         if (auths[_address]) {
             return hex"11";
         } else {
@@ -26,7 +26,7 @@ contract SimpleAuthorization is TokenValidator, Ownable {
         address _from,
         address _to,
         uint256 /* _amount */
-    ) public /* view */ returns (byte resultCode) {
+    ) external returns (byte resultCode) {
         if (auths[_from] && auths[_to]) {
             return hex"11";
         } else {

@@ -20,6 +20,8 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
     mapping(address => mapping(address => bool)) private mAuthorized;
     mapping(address => mapping(address => uint256)) private mAllowed;
 
+    uint8 public decimals = 18;
+
     // Single validator
     TokenValidator internal validator;
 
@@ -76,10 +78,6 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
 
     function granularity() public constant returns(uint256) {
         return mGranularity;
-    }
-
-    function decimals() public constant returns (uint8) {
-        return uint8(18);
     }
 
     function totalSupply() public constant returns(uint256) {
