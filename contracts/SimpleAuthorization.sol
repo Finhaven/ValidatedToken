@@ -1,11 +1,11 @@
 pragma solidity ^0.4.19;
 
-import "./dependencies/Owned.sol";
+import "./dependencies/Ownable.sol";
 import "./TokenValidator.sol";
 
 // Reference Validator
 
-contract SimpleAuthorization is TokenValidator, Owned {
+contract SimpleAuthorization is TokenValidator, Ownable {
   mapping(address => bool) private authorizations;
 
   function SimpleAuthorization() public {

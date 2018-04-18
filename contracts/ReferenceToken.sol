@@ -3,12 +3,12 @@ pragma solidity ^0.4.19;
 import "./ValidatedToken.sol";
 import "./TokenValidator.sol";
 
-import "./dependencies/Owned.sol";
+import "./dependencies/Ownable.sol";
 import "./dependencies/SafeMath.sol";
 
 import "./dependencies/ERC20Token.sol";
 
-contract ReferenceToken is Owned, ERC20Token, ValidatedToken {
+contract ReferenceToken is Ownable, ERC20Token, ValidatedToken {
     using SafeMath for uint256;
 
     string private mName;
