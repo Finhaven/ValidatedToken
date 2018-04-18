@@ -16,34 +16,34 @@ contract('SimpleAuthorization', (accounts) => { // eslint-disable-line no-undef
   });
 
 
-  it('ownder should be able to authorize and check auth', async () => {
+  it('owner should be able to authorize and check auth', async () => {
     const targetAccount = accounts[1];
     const authorizedBefore = await simpleAuthorization.check2.call(0x0, targetAccount);
 
-    assert.equal(authorizedBefore, 0, 'should not be already authorized');
+    assert.equal(authorizedBefore, '0x10', 'should not be already authorized');
 
     await simpleAuthorization.setAuthorized(targetAccount, true);
     let authorizedAfter = await simpleAuthorization.check2.call(0x0, targetAccount);
-    assert.equal(authorizedAfter, 1, 'should become authorized');
+    assert.equal(authorizedAfter, '0x11', 'should become authorized');
 
     await simpleAuthorization.setAuthorized(targetAccount, false);
     authorizedAfter = await simpleAuthorization.check2.call(0x0, targetAccount);
-    assert.equal(authorizedAfter, 0, 'should become unauthorized');
+    assert.equal(authorizedAfter, '0x10', 'should become unauthorized');
   });
 
   it('transfer should pass validation only when both accounts are authorized', async () => {
     const [, sender, receiver] = accounts;
 
     const authorizedBefore = await simpleAuthorization.check4.call(0x0, sender, receiver, 0);
-    assert.equal(authorizedBefore, 0, 'should not be already authorized');
+    assert.equal(authorizedBefore, '0x10', 'should not be already authorized');
     console.log(JSON.stringify(authorizedBefore));
 
     await simpleAuthorization.setAuthorized(receiver, true);
     let authorizedAfter = await simpleAuthorization.check4.call(0x0, sender, receiver, 0);
-    assert.equal(authorizedAfter, 0, 'should still be unauthorized');
+    assert.equal(authorizedAfter, '0x10', 'should still be unauthorized');
 
     await simpleAuthorization.setAuthorized(sender, true);
     authorizedAfter = await simpleAuthorization.check4.call(0x0, sender, receiver, 0);
-    assert.equal(authorizedAfter, 1, 'should become authorized');
+    assert.equal(authorizedAfter, '0x11', 'should become authorized');
   });
 });
