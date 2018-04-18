@@ -8,7 +8,7 @@ import "./TokenValidator.sol";
 contract SimpleAuthorization is TokenValidator, Ownable {
     mapping(address => bool) private auths;
 
-    function SimpleAuthorization() public Owned {}
+    function SimpleAuthorization() public Ownable {}
 
     function check(
         address /* token */,
