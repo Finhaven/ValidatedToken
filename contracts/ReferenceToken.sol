@@ -3,9 +3,9 @@ pragma solidity ^0.4.21;
 import "./ValidatedToken.sol";
 import "./TokenValidator.sol";
 
-import "./../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
-import "./../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol";
-import "./../node_modules/zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "zeppelin-solidity/contracts/math/SafeMath.sol";
+import "zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 
 contract ReferenceToken is Ownable, ERC20, ValidatedToken {
     using SafeMath for uint256;
