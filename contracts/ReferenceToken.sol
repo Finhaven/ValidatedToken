@@ -133,7 +133,6 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         uint256 _amount
     ) internal {
         require(canTransfer(_from, _to, _amount));
-        requireMultiple(_amount);
 
         mBalances[_from] = mBalances[_from].sub(_amount);
         mBalances[_to] = mBalances[_to].add(_amount);
@@ -148,6 +147,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
     ) internal returns (bool) {
         return (
             (_to != address(0)) // Forbid sending to 0x0 (=burning)
+            && requireMultiple(_amount)
             && (mBalances[_from] >= _amount) // Ensure enough funds
             && isOk(validate(_from, _to, _amount)) // Ensure passes validation
         );
