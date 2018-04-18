@@ -1,6 +1,6 @@
 pragma solidity ^0.4.19;
 
-import "./dependencies/Ownable.sol";
+import "./../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./TokenValidator.sol";
 
 // Reference Validator
