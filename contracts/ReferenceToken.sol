@@ -3,12 +3,12 @@ pragma solidity ^0.4.19;
 import "./ValidatedToken.sol";
 import "./TokenValidator.sol";
 
-import "./dependencies/Owned.sol";
-import "./dependencies/SafeMath.sol";
+import "./../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "./../node_modules/zeppelin-solidity/contracts/math/SafeMath.sol";
 
-import "./dependencies/ERC20Token.sol";
+import "./../node_modules/zeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 
-contract ReferenceToken is Owned, ERC20Token, ValidatedToken {
+contract ReferenceToken is Ownable, ERC20, ValidatedToken {
     using SafeMath for uint256;
 
     string private mName;
@@ -70,7 +70,7 @@ contract ReferenceToken is Owned, ERC20Token, ValidatedToken {
 
     function granularity() public constant returns(uint256) { return mGranularity; }
 
-    function decimals() public constant returns (uint8) { return uint8(18); }
+    function decimals() public pure returns (uint8) { return uint8(18); }
 
     function totalSupply() public constant returns(uint256) { return mTotalSupply; }
 
