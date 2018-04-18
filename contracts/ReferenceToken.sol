@@ -88,8 +88,8 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
         return mBalances[_tokenHolder];
     }
 
-    function requireMultiple(uint256 _amount) internal view {
-        require(_amount.div(mGranularity).mul(mGranularity) == _amount);
+    function isMultiple(uint256 _amount) internal view returns (bool) {
+      return _amount.div(mGranularity).mul(mGranularity) == _amount;
     }
 
     function approve(address _spender, uint256 _amount) public returns (bool success) {
@@ -106,7 +106,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
 
     function mint(address _tokenHolder, uint256 _amount) public onlyOwner {
         requireOk(validate(_tokenHolder));
-        requireMultiple(_amount);
+        require(isMultiple(_amount));
 
         mTotalSupply = mTotalSupply.add(_amount);
         mBalances[_tokenHolder] = mBalances[_tokenHolder].add(_amount);
@@ -147,7 +147,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
     ) internal returns (bool) {
         return (
             (_to != address(0)) // Forbid sending to 0x0 (=burning)
-            && requireMultiple(_amount)
+            && isMultiple(_amount)
             && (mBalances[_from] >= _amount) // Ensure enough funds
             && isOk(validate(_from, _to, _amount)) // Ensure passes validation
         );
