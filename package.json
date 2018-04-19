@@ -14,6 +14,7 @@
     "test:lint": "eslint -c .eslintrc . --color=true --quiet",
     "test:lint:fix": "eslint -c .eslintrc . --color=true --quiet --fix",
     "truffle:compile": "truffle compile",
+    "truffle:migrate": "truffle migrate",
     "start:testrpc": "ganache-cli -u 0 -s frontier-seed",
     "watch": "npm-watch"
   },
@@ -36,7 +37,7 @@
     "eip777": "^0.0.3",
     "eip820": "^0.0.17",
     "giveth-common-contracts": "^0.5.0",
-    "solc": "^0.4.21",
+    "solc": "^0.4.22",
     "truffle-hdwallet-provider": "0.0.3"
   },
   "devDependencies": {
@@ -49,7 +50,7 @@
     "npm-watch": "^0.3.0",
     "solhint": "^1.1.10",
     "solidity-coverage": "^0.4.14",
-    "truffle": "^4.1.5",
+    "truffle": "^4.1.6",
     "zeppelin-solidity": "1.8.0"
   }
 }
