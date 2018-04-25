@@ -1,4 +1,4 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./TokenValidator.sol";
@@ -8,7 +8,7 @@ import "./TokenValidator.sol";
 contract SimpleAuthorization is TokenValidator, Ownable {
     mapping(address => bool) private auths;
 
-    function SimpleAuthorization() public Ownable {}
+    constructor() public {}
 
     function check(
         address /* token */,
