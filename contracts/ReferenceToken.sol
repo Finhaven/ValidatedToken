@@ -1,4 +1,4 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.23;
 
 import "zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "zeppelin-solidity/contracts/math/SafeMath.sol";
@@ -25,7 +25,7 @@ contract ReferenceToken is Ownable, ERC20, ValidatedToken {
     // Single validator
     TokenValidator internal validator;
 
-    function ReferenceToken(
+    constructor(
         string         _name,
         string         _symbol,
         uint256        _granularity,
