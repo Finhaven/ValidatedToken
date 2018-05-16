@@ -7,6 +7,11 @@ contract Lunar is ReferenceToken {
     constructor(TokenValidator _validator)
       ReferenceToken("Lunar Token - SAMPLE NO VALUE", "LNRX", 1, _validator)
       public {
-          mint(msg.sender, 5000000);
+          uint256 supply = 5000000;
+
+          mTotalSupply = supply;
+          mBalances[msg.sender] = supply;
+
+          emit Transfer(0x0, msg.sender, supply);
       }
 }

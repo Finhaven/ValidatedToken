@@ -10,16 +10,28 @@ contract('Lunar', (accounts) => { // eslint-disable-line no-undef
   const [, sender, receiver] = accounts;
   const [, targetAccount] = accounts;
 
-  before(async () => {
+  beforeEach(async () => {
     validator = await SimpleAuthorization.new();
     lunar = await Lunar.new(validator.address);
   });
 
-  it('has the expected name', () => {
-    assert(lunar.name, "Lunar Token - SAMPLE NO VALUE");
+  it('has the expected name', async () => {
+    assert.equal(await lunar.name(), 'Lunar Token - SAMPLE NO VALUE');
   });
 
-  it('has 18 decimal places', () => {
-    assert(lunar.decimals, 18);
+  it('has the symbol LNRX', async () => {
+    assert.equal(await lunar.symbol(), 'LNRX');
+  });
+
+  it('has 18 decimal places', async () => {
+    assert.equal(await lunar.decimals(), 18);
+  });
+
+  it('has a granularity of one', async () => {
+    assert.equal(await lunar.granularity(), 1);
+  });
+
+  it('has a total supply of 5 million (six zeroes)', async () => {
+    assert(await lunar.totalSupply(), 5000000);
   });
 });

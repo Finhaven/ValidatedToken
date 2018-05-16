@@ -10,15 +10,15 @@ import "./TokenValidator.sol";
 contract ReferenceToken is Ownable, ERC20, ValidatedToken {
     using SafeMath for uint256;
 
-    string private mName;
-    string private mSymbol;
+    string internal mName;
+    string internal mSymbol;
 
-    uint256 private mGranularity;
-    uint256 private mTotalSupply;
+    uint256 internal mGranularity;
+    uint256 internal mTotalSupply;
 
-    mapping(address => uint) private mBalances;
-    mapping(address => mapping(address => bool)) private mAuthorized;
-    mapping(address => mapping(address => uint256)) private mAllowed;
+    mapping(address => uint) internal mBalances;
+    mapping(address => mapping(address => bool)) internal mAuthorized;
+    mapping(address => mapping(address => uint256)) internal mAllowed;
 
     uint8 public decimals = 18;
 
