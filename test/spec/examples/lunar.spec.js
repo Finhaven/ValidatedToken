@@ -34,4 +34,17 @@ contract('Lunar', (accounts) => { // eslint-disable-line no-undef
   it('has a total supply of 5 million (six zeroes)', async () => {
     assert(await lunar.totalSupply(), 5000000);
   });
+
+
+  it('authorized should get tokens', async () => {
+    await validator.setAuthorized(targetAccount, true);
+    const mintResult = await lunar.mint(targetAccount, 1000000);
+    const validationEvent = mintResult.logs[0];
+
+    assert.equal(validationEvent.event, 'Validation');
+    assert.equal(validationEvent.args.user, targetAccount);
+
+    const balance = await referenceToken.balanceOf(targetAccount);
+    assert.equal(balance, amount * granularity);
+  });
 });
