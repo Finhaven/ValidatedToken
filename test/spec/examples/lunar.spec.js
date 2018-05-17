@@ -51,8 +51,8 @@ contract('Lunar', (accounts) => { // eslint-disable-line no-undef
     it('reverts when attempting to mint', async () => {
       const amount = 42 * DECIMAL_SHIFT;
 
-      failTransaction(async () => {
-        await lunar.mint(receiver, amount);
+      failTransaction(() => {
+        lunar.mint(receiver, amount);
       });
     });
   });
