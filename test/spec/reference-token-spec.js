@@ -1,18 +1,8 @@
 const { assert } = require('chai');
+const { failTransaction, revertMessage } = require('./helpers');
 
 const SimpleAuthorization = artifacts.require('SimpleAuthorization'); // eslint-disable-line no-undef
 const ReferenceToken = artifacts.require('ReferenceToken'); // eslint-disable-line no-undef
-
-const revertMessage = 'VM Exception while processing transaction: revert';
-
-async function failTransaction(func, args, errorMessage) {
-  try {
-    await func.apply(this, args);
-    throw new Error('Should have failed');
-  } catch (e) {
-    assert.equal(e.message, errorMessage);
-  }
-}
 
 contract('ReferenceToken', (accounts) => { // eslint-disable-line no-undef
   const name = 'testToken';
